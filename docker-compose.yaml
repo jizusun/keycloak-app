@@ -4,9 +4,11 @@ services:
   # https://www.keycloak.org/getting-started/getting-started-docker
   keycloak:
     image: quay.io/keycloak/keycloak:20.0.2
+    volumes:
+      - $PWD/keycloak-data:/opt/keycloak/data/import
     environment:
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=admin
     ports:
-      - "8080:8080"
-    command: start-dev
+      - "8080:8080" 
+    command: start-dev --import-realm
