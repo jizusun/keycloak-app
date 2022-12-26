@@ -1,0 +1,12 @@
+
+version: "3.9"  # optional since v1.27.0
+services:
+  # https://www.keycloak.org/getting-started/getting-started-docker
+  keycloak:
+    image: quay.io/keycloak/keycloak:20.0.2
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+    ports:
+      - "8080:8080"
+    command: start-dev
