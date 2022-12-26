@@ -1,34 +1,32 @@
 import { useState, useEffect } from 'react';
-import Keycloak from 'keycloak-js';
+import { OidcSecure, useOidcUser, OidcUserStatus } from '@axa-fr/react-oidc';
 
-export default function Resources(){
-  const [keycloak, setKeycloak] = useState(null)
-  const [authenticated, setAuthenticated] = useState(false)
+const DisplayUserInfo = () => {
+  const { oidcUser, oidcUserLoadingState } = useOidcUser();
 
-  useEffect(()=>{
-    const keycloak = Keycloak('/keycloak.json');
-    keycloak.init({ onLoad: 'login-required' }).then(authenticated => {
-      setKeycloak(keycloak)
-      setAuthenticated(authenticated)
-    })
-  }, [])
-
-  if (keycloak) {
-    if (authenticated) return (
-      <div className='my-12 grid place-items-center'>
-        <p>This is a Keycloak-secured component of your application. You shouldn't be able
-          to see this unless you've authenticated with Keycloak.</p>
-          <div>
-          <img src="https://random.imagecdn.app/500/250"/> 
-          </div>
-      </div>
-    ); 
-    else return (<div className='my-12'>Unable to authenticate!</div>)
+  switch (oidcUserLoadingState) {
+    case OidcUserStatus.Loading:
+      return <p>User Information are loading</p>;
+    case OidcUserStatus.Unauthenticated:
+      return <p>you are not authenticated</p>;
+    case OidcUserStatus.LoadingError:
+      return <p>Fail to load user information</p>;
+    default:
+      return (
+        <>
+          {JSON.stringify(oidcUser)}
+        </>
+      );
   }
+};
 
-  return(
-    <>
-      <div className='my-12'>Initializing Keycloak...</div>
-    </>
+const Resources = () => {
+  return (
+    <div className='my-12 grid place-items-center'>
+      <DisplayUserInfo />
+    </div >
   )
 }
+
+
+export const ResourcesHoc = () => <OidcSecure><Resources /></OidcSecure>
