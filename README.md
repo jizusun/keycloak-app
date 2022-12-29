@@ -8,3 +8,5 @@
 - <https://github.com/react-keycloak/react-keycloak-examples/tree/master/examples/gatsbyjs>
 - <https://developer.okta.com/blog/2017/06/21/what-the-heck-is-oauth>
 - <https://github.com/lukaszbudnik/keycloak-kubernetes>
+- <https://www.keycloak.org/getting-started/getting-started-docker>
+- <https://www.baeldung.com/spring-security-oauth2-jws-jwk#perspective>
